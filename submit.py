@@ -2,7 +2,7 @@ import numpy as np
 import random as rnd
 import time as tm
 from numpy import linalg as LA
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 # SUBMIT YOUR CODE AS A SINGLE PYTHON (.PY) FILE INSIDE A ZIP ARCHIVE
 # THE NAME OF THE PYTHON FILE MUST BE SUBMIT.PY
@@ -40,18 +40,18 @@ def solver( X, y, timeout, spacing ):
 ################################
 #  Non Editable Region Ending  #
 ################################
-    y = np.transpose(np.asmatrix(y))
+    #y = np.transpose(np.asmatrix(y))
     # You may reinitialize w to your liking here
     # You may also define new variables here e.g. step_length, mini-batch size etc
     x1=X;y1=y;
-    w=np.zeros((1000, 1));
+    #w=np.zeros((d, 1));
     l=1;#hypertuning parameter
     # ll=1;
     value=[];
     timee=[];
     Graph_time = 0
     ticc = tm.perf_counter()
-    lembda_1 = 0
+    lembda_1 = 1
 ################################
 # Non Editable Region Starting #
 ################################
@@ -61,8 +61,8 @@ def solver( X, y, timeout, spacing ):
             toc = tm.perf_counter()
             totTime = totTime + (toc - tic)
             if totTime > timeout:
-                print(value[len(value) - 1 ])
-                plt.plot(timee,value);
+                #print(value[len(value) - 1 ])
+               # plt.plot(timee,value);
                 #plt.show();
                 return (w, totTime)
             else:
@@ -73,13 +73,13 @@ def solver( X, y, timeout, spacing ):
         x1t=np.transpose(x1);
         r=1/l;
         #print(r);
-        df=2*(x1t @ ((x1 @ w)-y1))
+        df=2*(x1t.dot((x1.dot(w))-y1))
         #print(df)
         D=w-r*(df);
         #print(D)
         w1=s_mu(D,r);
         #print(w1);
-        while ((LA.norm((x1 @ w1)-y1,2)**2)>(LA.norm((x1 @ w)-y1,2)**2)+np.dot(np.transpose(w1-w),df)+(l/2)*(LA.norm(w1-w,2)**2)):
+        while ((LA.norm((x1.dot(w1))-y1,2)**2)>(LA.norm((x1.dot(w))-y1,2)**2)+np.dot(np.transpose(w1-w),df)+(l/2)*(LA.norm(w1-w,2)**2)):
             l=l*36;r=1/l;
             w1=s_mu(D,r);
         
@@ -91,11 +91,13 @@ def solver( X, y, timeout, spacing ):
         
         w=w1+(beta)*(w1-w)
         lembda_1 = lembda_2
-        value.append(LA.norm(w,1)+(LA.norm((x1 @ w)-y1,2)**2));
-        tocc = tm.perf_counter()
-        Graph_time = Graph_time + (tocc - ticc)
-        timee.append(Graph_time);
-        ticc = tm.perf_counter()
+        
+        
+        # value.append(LA.norm(w,1)+(LA.norm((x1.dot(w))-y1,2)**2));
+        # tocc = tm.perf_counter()
+        # Graph_time = Graph_time + (tocc - ticc)
+        # timee.append(Graph_time);
+        # ticc = tm.perf_counter()
         
         
         
